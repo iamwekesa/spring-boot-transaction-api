@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Setter
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "sender_name", nullable = false)
