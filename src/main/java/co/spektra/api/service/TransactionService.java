@@ -5,21 +5,21 @@ import co.spektra.api.model.Transaction;
 import co.spektra.api.exception.TransactionNotFoundException;
 import co.spektra.api.validation.TransactionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class TransactionService {
-    private final TransactionRepository transactionRepository;
-
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
-    }
+    private TransactionRepository transactionRepository;
 
-    public List<Transaction> getAllTransactions(){
-        return transactionRepository.findAll();
+    public Page<Transaction> getAllTransactions(Integer page, Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        return transactionRepository.findAll(pageable);
     }
 
     public Transaction getTransactionById(Long id){

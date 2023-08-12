@@ -5,6 +5,7 @@ import co.spektra.api.ApiResponse;
 import co.spektra.api.model.Transaction;
 import co.spektra.api.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,13 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Transaction>>> getAllTransactions() {
-        List<Transaction> transactionListData = transactionService.getAllTransactions();
-        ApiResponse<List<Transaction>> successResponse =
+    public ResponseEntity<ApiResponse<Page<Transaction>>> getAllTransactions(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
+
+        Page<Transaction> transactionListData = transactionService.getAllTransactions(page, size);
+
+        ApiResponse<Page<Transaction>> successResponse =
                 new ApiResponse<>(ApiResponse.Status.SUCCESS, "Transactions retrieved successfully", transactionListData);
 
         return ResponseEntity.status(HttpStatus.OK).body(successResponse);

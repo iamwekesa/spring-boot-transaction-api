@@ -67,5 +67,4 @@ public class TransactionValidatorTest {
 
         TransactionValidator.validate(invalidTransaction);
     }
-
 }

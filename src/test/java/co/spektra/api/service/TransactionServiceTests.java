@@ -12,6 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -29,6 +33,8 @@ public class TransactionServiceTests {
 	@Test
 	public void shouldReturnAllTransactions() {
 		List<Transaction> transactions = new ArrayList<>();
+		Integer pageNumber = 0;
+		Integer pageSize = 10;
 
 		Transaction transaction1 = new Transaction(
 				1L,
@@ -45,11 +51,14 @@ public class TransactionServiceTests {
 		transactions.add(transaction1);
 		transactions.add(transaction2);
 
-		// Mock repository behavior
-		Mockito.when(transactionRepository.findAll()).thenReturn(transactions);
+		Page<Transaction> transactionPage = new PageImpl<>(transactions);
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-		List<Transaction> result = transactionService.getAllTransactions();
-		Assert.assertEquals(transactions.size(), result.size());
+		// Mock repository behavior
+		Mockito.when(transactionRepository.findAll(pageable)).thenReturn(transactionPage);
+
+		Page<Transaction> result = transactionService.getAllTransactions(pageNumber, pageSize);
+		Assert.assertEquals(transactions.size(), result.getSize());
 	}
 	@Test
 	public void shouldReturnTransactionById() {
