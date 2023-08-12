@@ -11,7 +11,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler(TransactionNotFoundException.class)
     public ResponseEntity<ApiResponse<ErrorResponse>> handleTransactionNotFound(TransactionNotFoundException ex) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-        ErrorResponse error = new ErrorResponse(ex.getMessage(), httpStatus);
+        ErrorResponse error = new ErrorResponse(ex, httpStatus);
 
         ApiResponse<ErrorResponse> errorResponse =
                 new ApiResponse<>(ApiResponse.Status.ERROR, "", error);
@@ -23,7 +23,7 @@ public class ApiExceptionHandler {
     public ResponseEntity<ApiResponse<ErrorResponse>> handleInvalidTransaction(InvalidTransactionException ex) {
 
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-        ErrorResponse error = new ErrorResponse(ex.getMessage(), httpStatus);
+        ErrorResponse error = new ErrorResponse(ex, httpStatus);
         ApiResponse<ErrorResponse> errorResponse =
                 new ApiResponse<>(ApiResponse.Status.ERROR, "", error);
 
@@ -38,11 +38,11 @@ public class ApiExceptionHandler {
          involve divulge system information to client.
          */
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-        ErrorResponse error = new ErrorResponse(ex.getLocalizedMessage(), httpStatus);
+        ErrorResponse error = new ErrorResponse(ex, httpStatus);
         ApiResponse<ErrorResponse> errorResponse =
                 new ApiResponse<>(ApiResponse.Status.ERROR, "", error);
 
-        // Return an error response
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(errorResponse);
     }

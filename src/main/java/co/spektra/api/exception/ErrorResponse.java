@@ -15,15 +15,17 @@ import java.util.UUID;
 @Setter
 public class ErrorResponse {
     private UUID errorId;
+    private String errorType;
     private int statusCode;
     private String status;
     private String message;
     private long timestamp;
-    public ErrorResponse(String message, HttpStatus status) {
+    public ErrorResponse(Exception ex, HttpStatus status) {
         this.errorId = UUID.randomUUID();
+        this.errorType = ex.getClass().getSimpleName();
         this.statusCode = status.value();
         this.status = status.getReasonPhrase();
-        this.message = message;
+        this.message = ex.getMessage();
         this.timestamp = System.currentTimeMillis();
     }
 }

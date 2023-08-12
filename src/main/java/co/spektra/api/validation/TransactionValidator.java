@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class TransactionValidator {
-
     private static final Integer MAX_NAME_LENGTH = 40;
     public static void validate(Transaction transaction) {
         validateSenderName(transaction.getSenderName());
@@ -44,6 +43,6 @@ public class TransactionValidator {
             throw new InvalidTransactionException("Transaction date cannot be empty.");
         }
 
-        // TODO: Look into validating is Date is an acceptable Date.
+        // TODO: Look into validating if Date is an acceptable Date.
     }
 }
