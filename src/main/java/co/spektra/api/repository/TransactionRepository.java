@@ -1,5 +1,6 @@
-package co.spektra.api.transaction;
+package co.spektra.api.repository;
 
+import co.spektra.api.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
