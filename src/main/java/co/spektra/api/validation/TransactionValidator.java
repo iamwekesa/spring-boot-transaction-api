@@ -8,8 +8,7 @@ import java.time.LocalDateTime;
 
 public class TransactionValidator {
 
-    RuntimeException generalException = new InvalidTransactionException("Transaction data is invalid");
-    private static final Integer MAX_NAME_LENGTH = 10;
+    private static final Integer MAX_NAME_LENGTH = 40;
     public static void validate(Transaction transaction) {
         validateSenderName(transaction.getSenderName());
         validateReceiverName(transaction.getReceiverName());
